@@ -840,7 +840,7 @@
             <form onsubmit="verifyAdminLogin(event)">
                 <div class="form-group" style="text-align: left; margin-bottom: 15px;">
                     <label>Admin Passcode / PIN *</label>
-                    <input type="password" id="adminPinInput" required placeholder="Enter admin code (e.g. 2026)">
+                    <input type="password" id="adminPinInput" required placeholder="Enter admin PIN">
                 </div>
                 <button type="submit" class="btn-primary full-width">Authenticate & Open Admin</button>
             </form>
@@ -1095,7 +1095,7 @@
         function verifyAdminLogin(event) {
             event.preventDefault();
             const pin = document.getElementById('adminPinInput').value.trim();
-            if (pin === '2026' || pin === 'admin123' || pin === 'hentect') {
+            if (pin === '41542621') {
                 closeModal('adminLoginModal');
                 document.getElementById('adminPinInput').value = '';
                 showSection('admin');
