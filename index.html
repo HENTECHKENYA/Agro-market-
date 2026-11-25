@@ -50,7 +50,155 @@
             flex-direction: column;
         }
 
-        /* Navbar & Three-Line Hamburger Menu */
+        /* Welcome Intro Splash Overlay (4 Seconds Word Animation) */
+        #welcomeOverlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 99999;
+            background: linear-gradient(135deg, #071c10 0%, #093c1c 55%, #126b33 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 24px;
+            color: #ffffff;
+            opacity: 1;
+            transition: opacity 0.65s ease;
+        }
+
+        #welcomeOverlay.hide-welcome {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .welcome-icon {
+            font-size: 3rem;
+            width: 90px;
+            height: 90px;
+            border-radius: 22px;
+            background: rgba(255, 255, 255, 0.12);
+            border: 2px solid #4ade80;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 22px;
+            animation: welcomeBounce 1.4s ease infinite;
+        }
+
+        .welcome-heading {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 2.1rem;
+            font-weight: 800;
+            line-height: 1.35;
+            max-width: 820px;
+            color: #ffffff;
+        }
+
+        .welcome-word {
+            display: inline-block;
+            opacity: 0;
+            transform: translateY(18px);
+            animation: wordReveal 3.6s ease forwards;
+            animation-delay: var(--d, 0s);
+        }
+
+        .welcome-word.highlight {
+            color: #4ade80;
+        }
+
+        .welcome-break {
+            flex-basis: 100%;
+            height: 0;
+        }
+
+        .welcome-loader {
+            width: 240px;
+            height: 5px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 999px;
+            overflow: hidden;
+            margin-top: 26px;
+        }
+
+        .welcome-loader-bar {
+            height: 100%;
+            width: 100%;
+            background: #4ade80;
+            transform-origin: left center;
+            animation: welcomeFill 4s linear forwards;
+        }
+
+        @keyframes wordReveal {
+            0% {
+                opacity: 0;
+                transform: translateY(18px) scale(0.95);
+            }
+            20% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+            88% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+            100% {
+                opacity: 0.85;
+                transform: translateY(-4px) scale(1);
+            }
+        }
+
+        @keyframes welcomeBounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-8px);
+            }
+        }
+
+        @keyframes welcomeFill {
+            0% {
+                transform: scaleX(0);
+            }
+            100% {
+                transform: scaleX(1);
+            }
+        }
+
+        /* Transparent Submission Bubble Toast */
+        .transparent-bubble-toast {
+            position: fixed;
+            top: 24px;
+            left: 50%;
+            transform: translateX(-50%) translateY(-16px);
+            z-index: 100000;
+            max-width: min(90vw, 540px);
+            padding: 16px 24px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.22);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border: 1px solid rgba(255, 255, 255, 0.55);
+            box-shadow: 0 12px 32px rgba(7, 28, 16, 0.16), inset 0 1px 1px rgba(255, 255, 255, 0.65);
+            color: var(--text);
+            font-weight: 600;
+            font-size: 0.94rem;
+            text-align: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.35s ease, transform 0.35s ease;
+        }
+
+        .transparent-bubble-toast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        /* Navbar */
         .navbar {
             background: var(--dark);
             color: white;
@@ -73,76 +221,13 @@
             gap: 16px;
         }
 
-        .menu-container {
-            position: relative;
-        }
-
-        .hamburger-btn {
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(74, 222, 128, 0.35);
-            border-radius: 8px;
-            width: 42px;
-            height: 42px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            gap: 5px;
-            cursor: pointer;
-            transition: 0.2s;
-        }
-
-        .hamburger-btn:hover {
-            background: var(--primary-light);
-            border-color: var(--primary-light);
-        }
-
-        .hamburger-btn span {
-            display: block;
-            width: 20px;
-            height: 2.5px;
-            background: #dcfce7;
-            border-radius: 2px;
-            pointer-events: none;
-        }
-
-        .menu-dropdown {
-            display: none;
-            position: absolute;
-            top: 50px;
-            left: 0;
-            background: white;
-            min-width: 190px;
-            border-radius: 8px;
-            box-shadow: var(--shadow-lg);
-            border: 1px solid var(--border);
-            z-index: 300;
-            overflow: hidden;
-        }
-
-        .menu-dropdown.show {
-            display: block;
-        }
-
-        .menu-dropdown a {
-            display: block;
-            padding: 13px 16px;
-            color: var(--primary-dark);
-            text-decoration: none;
-            font-weight: 700;
-            font-size: 0.92rem;
-            transition: 0.15s;
-        }
-
-        .menu-dropdown a:hover {
-            background: var(--primary-soft);
-            color: var(--primary);
-        }
-
         .logo {
             display: flex;
             align-items: center;
             gap: 10px;
+            cursor: pointer;
+            user-select: none;
+            -webkit-user-select: none;
         }
 
         .logo-icon {
@@ -220,7 +305,7 @@
         }
 
         .hero-content {
-            max-width: 760px;
+            max-width: 820px;
             margin: 0 auto;
         }
 
@@ -237,7 +322,7 @@
         }
 
         .search-bar {
-            max-width: 620px;
+            max-width: 780px;
             margin: 0 auto;
             display: flex;
             gap: 6px;
@@ -245,10 +330,12 @@
             padding: 6px;
             border-radius: 10px;
             box-shadow: var(--shadow-md);
+            flex-wrap: wrap;
         }
 
         .search-bar input {
-            flex: 1;
+            flex: 1.4;
+            min-width: 180px;
             padding: 11px 14px;
             border-radius: 6px;
             border: none;
@@ -257,12 +344,31 @@
             color: var(--text);
         }
 
+        .location-search-box {
+            flex: 1;
+            min-width: 170px;
+            display: flex;
+            align-items: center;
+            border-left: 1px solid var(--border);
+            padding-left: 8px;
+        }
+
+        .location-search-box input {
+            width: 100%;
+            padding: 11px 10px;
+            border: none;
+            font-size: 0.94rem;
+            outline: none;
+            color: var(--text);
+            background: transparent;
+        }
+
         .search-bar button {
             background: var(--primary);
             color: white;
             font-weight: 700;
             border: none;
-            padding: 0 24px;
+            padding: 11px 22px;
             border-radius: 6px;
             cursor: pointer;
             transition: 0.2s;
@@ -270,6 +376,70 @@
 
         .search-bar button:hover {
             background: var(--primary-dark);
+        }
+
+        /* Nearest Location Helper Bar */
+        .nearest-banner {
+            background: white;
+            border: 1px solid var(--border);
+            border-left: 4px solid var(--primary-light);
+            border-radius: 10px;
+            padding: 14px 18px;
+            margin-bottom: 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .nearest-controls {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .nearest-controls select, .nearest-controls input {
+            width: auto;
+            min-width: 165px;
+            padding: 8px 11px;
+            font-size: 0.88rem;
+            border-radius: 6px;
+        }
+
+        .clear-loc-btn {
+            background: var(--primary-soft);
+            color: var(--primary-dark);
+            border: 1px solid #86efac;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 0.82rem;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .clear-loc-btn:hover {
+            background: #dcfce7;
+        }
+
+        .proximity-tag {
+            display: inline-block;
+            font-size: 0.74rem;
+            font-weight: 700;
+            padding: 3px 8px;
+            border-radius: 4px;
+            margin-bottom: 8px;
+            background: #e0f2fe;
+            color: #075985;
+            border: 1px solid #7dd3fc;
+        }
+
+        .proximity-tag.exact-match {
+            background: #dcfce7;
+            color: var(--primary-dark);
+            border-color: #4ade80;
         }
 
         /* Container & Filters */
@@ -582,6 +752,108 @@
             background: var(--primary);
         }
 
+        /* Farming Learning Hub Section */
+        .learn-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            background: white;
+            padding: 18px 20px;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            margin-bottom: 20px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .learn-header h2 {
+            color: var(--primary-dark);
+        }
+
+        .learn-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .learn-card {
+            background: white;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow-sm);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transition: all 0.22s ease;
+        }
+
+        .learn-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-md);
+            border-color: #4ade80;
+        }
+
+        .learn-thumb {
+            height: 170px;
+            width: 100%;
+            object-fit: cover;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .learn-body {
+            padding: 16px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .learn-topic {
+            display: inline-block;
+            background: var(--primary-soft);
+            color: var(--primary-dark);
+            border: 1px solid #86efac;
+            padding: 3px 9px;
+            border-radius: 4px;
+            font-size: 0.72rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            width: fit-content;
+        }
+
+        .learn-title {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 6px;
+        }
+
+        .learn-desc {
+            font-size: 0.85rem;
+            color: var(--muted);
+            margin-bottom: 14px;
+            flex: 1;
+        }
+
+        .yt-link-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            background: #dc2626;
+            color: white;
+            text-decoration: none;
+            padding: 10px 12px;
+            border-radius: 6px;
+            font-weight: 700;
+            font-size: 0.86rem;
+            transition: 0.2s;
+        }
+
+        .yt-link-btn:hover {
+            background: #b91c1c;
+        }
+
         /* Admin Panel */
         .hidden { display: none !important; }
 
@@ -759,10 +1031,10 @@
 
         .full-width { width: 100%; margin-top: 10px; padding: 12px; }
 
-        /* Cart & Checkout */
+        /* Cart & Direct Farmer Contact */
         .cart-items {
             margin: 14px 0;
-            max-height: 220px;
+            max-height: 260px;
             overflow-y: auto;
         }
 
@@ -770,8 +1042,43 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
             padding: 10px 0;
             border-bottom: 1px solid var(--border);
+        }
+
+        .cart-item-actions {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+
+        .cart-call-link {
+            background: var(--primary-soft);
+            color: var(--primary-dark);
+            border: 1px solid #86efac;
+            padding: 5px 9px;
+            border-radius: 5px;
+            font-size: 0.78rem;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .cart-call-link:hover {
+            background: #dcfce7;
+        }
+
+        .cart-wa-btn {
+            background: var(--whatsapp);
+            color: white;
+            border: none;
+            padding: 5px 9px;
+            border-radius: 5px;
+            font-size: 0.78rem;
+            font-weight: 700;
+            cursor: pointer;
         }
 
         .cart-summary {
@@ -782,22 +1089,22 @@
             color: var(--primary-dark);
         }
 
+        .checkout-prompt {
+            background: var(--primary-soft);
+            border: 1px solid #86efac;
+            color: var(--primary-dark);
+            padding: 12px 14px;
+            border-radius: 8px;
+            font-size: 0.88rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
         .checkout-actions {
             display: flex;
             gap: 10px;
-            margin-top: 15px;
+            margin-top: 12px;
             flex-wrap: wrap;
-        }
-
-        .btn-mpesa {
-            flex: 1;
-            background: var(--mpesa);
-            color: white;
-            border: none;
-            padding: 11px;
-            border-radius: 6px;
-            font-weight: 700;
-            cursor: pointer;
         }
 
         .btn-whatsapp {
@@ -805,10 +1112,14 @@
             background: var(--whatsapp);
             color: white;
             border: none;
-            padding: 11px;
+            padding: 12px 14px;
             border-radius: 6px;
             font-weight: 700;
             cursor: pointer;
+        }
+
+        .btn-whatsapp:hover {
+            filter: brightness(0.96);
         }
 
         .btn-secondary {
@@ -833,30 +1144,42 @@
         footer strong { color: #4ade80; }
 
         @media (max-width: 640px) {
+            .welcome-heading { font-size: 1.45rem; }
             .hero h2 { font-size: 1.65rem; }
             .search-bar { flex-direction: column; }
+            .location-search-box { border-left: none; border-top: 1px solid var(--border); padding-left: 0; padding-top: 4px; }
             .search-bar button { padding: 11px; }
         }
     </style>
 </head>
 <body>
 
+    <!-- Transparent Submission Bubble -->
+    <div id="submitBubble" class="transparent-bubble-toast" role="status" aria-live="polite"></div>
+
+    <!-- Welcome Animation Before Opening Website (4 Seconds Word-by-Word) -->
+    <div id="welcomeOverlay">
+        <div class="welcome-icon">🌱</div>
+        <h2 class="welcome-heading">
+            <span class="welcome-word" style="--d:0s">welcome</span>
+            <span class="welcome-word" style="--d:0.2s">to</span>
+            <span class="welcome-word highlight" style="--d:0.4s">hentech</span>
+            <span class="welcome-word highlight" style="--d:0.6s">kenya</span>
+            <span class="welcome-break"></span>
+            <span class="welcome-word" style="--d:0.8s">home</span>
+            <span class="welcome-word" style="--d:1.0s">of</span>
+            <span class="welcome-word" style="--d:1.2s">all</span>
+            <span class="welcome-word" style="--d:1.4s">farmers</span>
+        </h2>
+        <div class="welcome-loader">
+            <div class="welcome-loader-bar"></div>
+        </div>
+    </div>
+
     <!-- Top Navigation -->
     <header class="navbar">
         <div class="nav-left">
-            <!-- Hamburger Menu (Three Lines) -->
-            <div class="menu-container" id="menuContainer">
-                <button type="button" class="hamburger-btn" id="hamburgerBtn" aria-label="Menu">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </button>
-                <div id="menuDropdown" class="menu-dropdown">
-                    <a href="#" id="hentectPortalLink">🌱 Hentect Admin</a>
-                </div>
-            </div>
-
-            <div class="logo">
+            <div class="logo" id="hentectBrandTrigger" title="Triple tap Hentect for Admin">
                 <span class="logo-icon">🌱</span>
                 <div>
                     <h1>HENTECT <span>AGRO MARKET</span></h1>
@@ -866,7 +1189,8 @@
         </div>
 
         <nav class="nav-links">
-            <button type="button" class="nav-btn active" onclick="showSection('marketplace')">Marketplace</button>
+            <button type="button" id="navMarketBtn" class="nav-btn active" onclick="showSection('marketplace')">Marketplace</button>
+            <button type="button" id="navLearnBtn" class="nav-btn" onclick="showSection('learn')">📚 Learn Farming</button>
             <button type="button" class="nav-btn" onclick="openModal('farmerModal')">+ Sell Produce</button>
             <button type="button" class="cart-btn" onclick="openModal('cartModal')">
                 🛒 Cart (<span id="cartCount">0</span>)
@@ -880,14 +1204,41 @@
             <h2>Fresh Farm Produce & Healthy Livestock, Straight From the Source</h2>
             <p>Connecting verified crop and livestock farmers directly to buyers across Kenya.</p>
             <div class="search-bar">
-                <input type="text" id="searchInput" placeholder="Search maize, dairy cows, broilers, tomatoes, location..." onkeyup="filterProducts()">
-                <button type="button" onclick="filterProducts()">Search</button>
+                <input type="text" id="searchInput" placeholder="Search maize, dairy cows, broilers, tomatoes..." onkeyup="filterProducts()">
+                <div class="location-search-box">
+                    <input type="text" id="buyerLocationSearch" placeholder="📍 Your location (e.g. Machakos, Nakuru)" onkeyup="syncBuyerLocation(this.value)">
+                </div>
+                <button type="button" onclick="filterProducts()">Find Nearest</button>
             </div>
         </div>
     </section>
 
     <!-- Main Marketplace Section -->
     <main id="marketplaceSection" class="container">
+        <!-- Nearest Farmer Location Selector -->
+        <div class="nearest-banner">
+            <div>
+                <strong>📍 Nearest Farmers Filter:</strong>
+                <span id="locationStatusText" style="color:var(--muted); font-size:0.88rem;">Specify your town or county to prioritize farmers closest to you.</span>
+            </div>
+            <div class="nearest-controls">
+                <select id="buyerLocationSelect" onchange="selectBuyerLocation(this.value)">
+                    <option value="">-- Choose Your Location --</option>
+                    <option value="Machakos">Machakos</option>
+                    <option value="Nakuru">Nakuru</option>
+                    <option value="Eldoret">Eldoret (Uasin Gishu)</option>
+                    <option value="Kiambu">Kiambu</option>
+                    <option value="Nairobi">Nairobi</option>
+                    <option value="Kisumu">Kisumu</option>
+                    <option value="Meru">Meru</option>
+                    <option value="Kitale">Kitale (Trans Nzoia)</option>
+                    <option value="Nyeri">Nyeri</option>
+                    <option value="Bungoma">Bungoma</option>
+                </select>
+                <button type="button" class="clear-loc-btn" onclick="clearBuyerLocation()">Reset Location</button>
+            </div>
+        </div>
+
         <div class="filter-bar">
             <div class="category-tabs">
                 <button type="button" class="tab active" onclick="setCategory('ALL', this)">All Produce</button>
@@ -901,6 +1252,31 @@
             <!-- Products dynamically loaded here -->
         </div>
     </main>
+
+    <!-- Farming Learning Hub Section (YouTube Guides) -->
+    <section id="learnSection" class="container hidden">
+        <div class="learn-header">
+            <div>
+                <h2>📚 Farmer & Buyer Learning Hub (YouTube Guides)</h2>
+                <p style="color:var(--muted); font-size:0.9rem;">Watch practical tutorials on crop farming, livestock care, irrigation, and agribusiness.</p>
+            </div>
+            <button type="button" class="btn-secondary" onclick="showSection('marketplace')">← Back to Market</button>
+        </div>
+
+        <div class="filter-bar">
+            <div class="category-tabs">
+                <button type="button" class="tab active" onclick="setLearnTopic('ALL', this)">All Farming Types</button>
+                <button type="button" class="tab" onclick="setLearnTopic('CROPS', this)">🌾 Crop Farming</button>
+                <button type="button" class="tab" onclick="setLearnTopic('LIVESTOCK', this)">🐄 Livestock & Poultry</button>
+                <button type="button" class="tab" onclick="setLearnTopic('AGRIBUSINESS', this)">💧 Irrigation & Agribusiness</button>
+            </div>
+            <div class="status-badge">🎥 Curated YouTube Resources</div>
+        </div>
+
+        <div id="learnGrid" class="learn-grid">
+            <!-- Farming learning cards loaded here -->
+        </div>
+    </section>
 
     <!-- Main Admin Dashboard Section (Hidden until authenticated) -->
     <section id="adminSection" class="container hidden">
@@ -1036,28 +1412,24 @@
         </div>
     </div>
 
-    <!-- Shopping Cart & Dual Checkout Modal (M-Pesa + WhatsApp) -->
+    <!-- Shopping Cart & Direct Farmer Contact Modal -->
     <div id="cartModal" class="modal">
         <div class="modal-content">
             <span class="close" onclick="closeModal('cartModal')">&times;</span>
-            <h2>🛒 Your Agro Cart & Checkout</h2>
+            <h2>🛒 Your Agro Cart</h2>
             <div id="cartItemsContainer" class="cart-items"></div>
             
             <div class="cart-summary">
-                <h3>Total: KES <span id="cartTotal">0</span></h3>
+                <h3>Estimated Total: KES <span id="cartTotal">0</span></h3>
             </div>
 
             <div class="checkout-box">
-                <h4>Buyer Delivery Details</h4>
-                <div class="form-row">
-                    <input type="text" id="buyerName" placeholder="Your Full Name" required>
-                    <input type="tel" id="buyerPhone" placeholder="M-Pesa Phone (07...)" required>
-                </div>
-                <input type="text" id="deliveryLocation" placeholder="Delivery Town / Stage / Address" style="margin-top: 10px; width: 100%;">
+                <p class="checkout-prompt">
+                    📞 No website payment is taken here. Go to your phone call to call the farmer directly, or chat them directly on WhatsApp.
+                </p>
 
                 <div class="checkout-actions">
-                    <button type="button" class="btn-mpesa" onclick="checkoutMpesa()">📱 Pay via M-Pesa Express</button>
-                    <button type="button" class="btn-whatsapp" onclick="checkoutWhatsApp()">💬 Order via WhatsApp</button>
+                    <button type="button" class="btn-whatsapp" onclick="checkoutWhatsApp()">💬 Chat Farmer on WhatsApp</button>
                 </div>
             </div>
         </div>
@@ -1070,7 +1442,36 @@
 
     <script>
         // ==========================================
-        // 1. INITIAL SAMPLE DATA & STATE
+        // 0. WELCOME ANIMATION BEFORE OPENING SITE (4 SECONDS)
+        // ==========================================
+        function runWelcomeAnimation() {
+            const overlay = document.getElementById('welcomeOverlay');
+            if (!overlay) return;
+
+            setTimeout(() => {
+                overlay.classList.add('hide-welcome');
+                setTimeout(() => {
+                    if (overlay && overlay.parentNode) {
+                        overlay.remove();
+                    }
+                }, 700);
+            }, 4000);
+        }
+
+        let submitBubbleTimeout = null;
+        function showTransparentBubble(message) {
+            const bubble = document.getElementById('submitBubble');
+            if (!bubble) return;
+            bubble.textContent = message;
+            bubble.classList.add('show');
+            clearTimeout(submitBubbleTimeout);
+            submitBubbleTimeout = setTimeout(() => {
+                bubble.classList.remove('show');
+            }, 4500);
+        }
+
+        // ==========================================
+        // 1. INITIAL SAMPLE DATA, LEARNING HUB & STATE
         // ==========================================
         const DEFAULT_PRODUCTS = [
             {
@@ -1142,11 +1543,86 @@
             }
         ];
 
+        const FARMING_GUIDES = [
+            {
+                id: "g1",
+                topic: "CROPS",
+                badge: "Crop Farming • Maize & Grains",
+                title: "Maize Farming & Post-Harvest Drying Guide",
+                description: "Learn land preparation, spacing, pest control, and proper drying techniques to prevent aflatoxins and preserve grain quality.",
+                thumbnail: "https://images.unsplash.com/photo-1551754655-cd27e38d2076?auto=format&fit=crop&w=800&q=80",
+                youtubeUrl: "https://www.youtube.com/results?search_query=maize+farming+guide+for+beginners"
+            },
+            {
+                id: "g2",
+                topic: "CROPS",
+                badge: "Crop Farming • Horticulture",
+                title: "Open-Field & Greenhouse Tomato Production",
+                description: "Practical lessons on nursery management, transplanting, blight prevention, and high-yield harvesting for market buyers.",
+                thumbnail: "https://images.unsplash.com/photo-1592924357228-91a4daadcfea?auto=format&fit=crop&w=800&q=80",
+                youtubeUrl: "https://www.youtube.com/results?search_query=tomato+farming+step+by+step+guide"
+            },
+            {
+                id: "g3",
+                topic: "LIVESTOCK",
+                badge: "Livestock • Dairy Cattle",
+                title: "Dairy Cow Feeding, Housing & Milk Yield Tips",
+                description: "Discover balanced fodder mixes, clean zero-grazing/paddock housing, and daily herd health practices to boost milk output.",
+                thumbnail: "https://images.unsplash.com/photo-1546445317-29f4545e9d53?auto=format&fit=crop&w=800&q=80",
+                youtubeUrl: "https://www.youtube.com/results?search_query=dairy+cattle+farming+feeding+and+management"
+            },
+            {
+                id: "g4",
+                topic: "LIVESTOCK",
+                badge: "Livestock • Poultry Farming",
+                title: "Broiler & Kienyeji Poultry Management",
+                description: "Step-by-step brooder setup, vaccination schedules, feed conversion ratios, and disease prevention for healthy flocks.",
+                thumbnail: "https://images.unsplash.com/photo-1548550023-2bdb3c5beed7?auto=format&fit=crop&w=800&q=80",
+                youtubeUrl: "https://www.youtube.com/results?search_query=poultry+farming+kienyeji+and+broilers+guide"
+            },
+            {
+                id: "g5",
+                topic: "AGRIBUSINESS",
+                badge: "Irrigation & Water",
+                title: "Drip Irrigation & Farm Water Harvesting",
+                description: "Save water and irrigate crops reliably during dry spells using drip kits, farm ponds, and solar water pumping setups.",
+                thumbnail: "https://images.unsplash.com/photo-1625246333195-78d9c38ad449?auto=format&fit=crop&w=800&q=80",
+                youtubeUrl: "https://www.youtube.com/results?search_query=drip+irrigation+system+for+small+farms"
+            },
+            {
+                id: "g6",
+                topic: "AGRIBUSINESS",
+                badge: "Agribusiness • Soil & Compost",
+                title: "Composting, Soil Health & Farm Record Keeping",
+                description: "Build rich organic compost from farm waste and track input costs, yields, and profits like a commercial agribusiness.",
+                thumbnail: "https://images.unsplash.com/photo-1500937386664-56d1dfef3854?auto=format&fit=crop&w=800&q=80",
+                youtubeUrl: "https://www.youtube.com/results?search_query=organic+composting+and+soil+health+farming"
+            }
+        ];
+
+        // Regional proximity graph (in approx km between key Kenyan towns/counties)
+        const LOCATION_COORDS = {
+            "machakos": { lat: -1.5177, lon: 37.2634 },
+            "nairobi": { lat: -1.2921, lon: 36.8219 },
+            "kiambu": { lat: -1.1714, lon: 36.8356 },
+            "nakuru": { lat: -0.3031, lon: 36.0800 },
+            "eldoret": { lat: 0.5143, lon: 35.2698 },
+            "uasin gishu": { lat: 0.5143, lon: 35.2698 },
+            "kisumu": { lat: -0.0917, lon: 34.7680 },
+            "meru": { lat: 0.0469, lon: 37.6559 },
+            "kitale": { lat: 1.0157, lon: 35.0062 },
+            "trans nzoia": { lat: 1.0157, lon: 35.0062 },
+            "nyeri": { lat: -0.4201, lon: 36.9476 },
+            "bungoma": { lat: 0.5635, lon: 34.5606 }
+        };
+
         let products = JSON.parse(localStorage.getItem('hentect_agro_products')) || DEFAULT_PRODUCTS;
         products = products.map(p => ({ ...p, comments: Array.isArray(p.comments) ? p.comments : [] }));
 
         let cart = JSON.parse(localStorage.getItem('hentect_agro_cart')) || [];
         let currentCategory = 'ALL';
+        let currentLearnTopic = 'ALL';
+        let buyerLocation = localStorage.getItem('hentect_buyer_location') || '';
 
         function saveProducts() {
             localStorage.setItem('hentect_agro_products', JSON.stringify(products));
@@ -1158,27 +1634,22 @@
         }
 
         // ==========================================
-        // 2. THREE-LINE HAMBURGER MENU & MODALS
+        // 2. TRIPLE-TAP HENTECT BRAND FOR ADMIN & MODALS
         // ==========================================
-        const hamburgerBtn = document.getElementById('hamburgerBtn');
-        const menuDropdown = document.getElementById('menuDropdown');
-        const hentectPortalLink = document.getElementById('hentectPortalLink');
+        const hentectBrandTrigger = document.getElementById('hentectBrandTrigger');
+        let tapCount = 0;
+        let tapTimer = null;
 
-        hamburgerBtn.addEventListener('click', function(e) {
-            e.stopPropagation();
-            menuDropdown.classList.toggle('show');
-        });
-
-        hentectPortalLink.addEventListener('click', function(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            menuDropdown.classList.remove('show');
-            openModal('adminLoginModal');
-        });
-
-        document.addEventListener('click', function(e) {
-            if (!document.getElementById('menuContainer').contains(e.target)) {
-                menuDropdown.classList.remove('show');
+        hentectBrandTrigger.addEventListener('click', function() {
+            tapCount += 1;
+            clearTimeout(tapTimer);
+            if (tapCount >= 3) {
+                tapCount = 0;
+                openModal('adminLoginModal');
+            } else {
+                tapTimer = setTimeout(() => {
+                    tapCount = 0;
+                }, 650);
             }
         });
 
@@ -1211,15 +1682,27 @@
         // ==========================================
         function showSection(section) {
             const marketSec = document.getElementById('marketplaceSection');
+            const learnSec = document.getElementById('learnSection');
             const adminSec = document.getElementById('adminSection');
+            const marketBtn = document.getElementById('navMarketBtn');
+            const learnBtn = document.getElementById('navLearnBtn');
+
+            marketSec.classList.add('hidden');
+            learnSec.classList.add('hidden');
+            adminSec.classList.add('hidden');
+            marketBtn.classList.remove('active');
+            learnBtn.classList.remove('active');
 
             if (section === 'admin') {
-                marketSec.classList.add('hidden');
                 adminSec.classList.remove('hidden');
                 renderAdminTable();
+            } else if (section === 'learn') {
+                learnSec.classList.remove('hidden');
+                learnBtn.classList.add('active');
+                renderLearningHub();
             } else {
-                adminSec.classList.add('hidden');
                 marketSec.classList.remove('hidden');
+                marketBtn.classList.add('active');
                 renderProducts();
             }
         }
@@ -1237,11 +1720,75 @@
         }
 
         // ==========================================
-        // 4. MARKETPLACE RENDERING, FILTERING & COMMENTS
+        // 4. BUYER LOCATION & NEAREST FARMERS LOGIC
+        // ==========================================
+        function findCoordsForText(locText) {
+            const cleaned = (locText || '').toLowerCase().trim();
+            if (!cleaned) return null;
+            for (const key of Object.keys(LOCATION_COORDS)) {
+                if (cleaned.includes(key)) {
+                    return { key, ...LOCATION_COORDS[key] };
+                }
+            }
+            return null;
+        }
+
+        function calcDistanceKm(c1, c2) {
+            if (!c1 || !c2) return null;
+            const R = 6371;
+            const dLat = (c2.lat - c1.lat) * Math.PI / 180;
+            const dLon = (c2.lon - c1.lon) * Math.PI / 180;
+            const a =
+                Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+                Math.cos(c1.lat * Math.PI / 180) * Math.cos(c2.lat * Math.PI / 180) *
+                Math.sin(dLon / 2) * Math.sin(dLon / 2);
+            const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+            return Math.round(R * c);
+        }
+
+        function applyBuyerLocation(locValue) {
+            buyerLocation = (locValue || '').trim();
+            localStorage.setItem('hentect_buyer_location', buyerLocation);
+
+            const searchInput = document.getElementById('buyerLocationSearch');
+            const selectInput = document.getElementById('buyerLocationSelect');
+            if (searchInput && searchInput.value !== buyerLocation) searchInput.value = buyerLocation;
+
+            if (selectInput) {
+                const matchedOption = Array.from(selectInput.options).find(
+                    opt => opt.value && buyerLocation.toLowerCase().includes(opt.value.toLowerCase())
+                );
+                selectInput.value = matchedOption ? matchedOption.value : '';
+            }
+
+            const statusEl = document.getElementById('locationStatusText');
+            if (buyerLocation) {
+                statusEl.innerHTML = `Showing farmers nearest to <strong style="color:var(--primary-dark);">📍 ${buyerLocation}</strong> (sorted closest first).`;
+            } else {
+                statusEl.textContent = "Specify your town or county to prioritize farmers closest to you.";
+            }
+
+            renderProducts();
+        }
+
+        function syncBuyerLocation(val) {
+            applyBuyerLocation(val);
+        }
+
+        function selectBuyerLocation(val) {
+            applyBuyerLocation(val);
+        }
+
+        function clearBuyerLocation() {
+            applyBuyerLocation('');
+        }
+
+        // ==========================================
+        // 5. MARKETPLACE RENDERING, FILTERING & COMMENTS
         // ==========================================
         function setCategory(cat, btnElement) {
             currentCategory = cat;
-            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('#marketplaceSection .tab').forEach(t => t.classList.remove('active'));
             if (btnElement) btnElement.classList.add('active');
             renderProducts();
         }
@@ -1292,8 +1839,9 @@
         function renderProducts() {
             const grid = document.getElementById('productGrid');
             const searchQuery = (document.getElementById('searchInput').value || '').toLowerCase();
+            const buyerCoords = findCoordsForText(buyerLocation);
 
-            const approvedProducts = products.filter(p => {
+            let approvedProducts = products.filter(p => {
                 if (p.status !== 'APPROVED') return false;
                 if (currentCategory !== 'ALL' && p.category !== currentCategory) return false;
                 if (searchQuery) {
@@ -1302,6 +1850,39 @@
                 }
                 return true;
             });
+
+            // Compute proximity score if buyer has specified a location
+            approvedProducts = approvedProducts.map(p => {
+                let distanceKm = null;
+                let exactMatch = false;
+
+                if (buyerLocation) {
+                    const locLower = (p.location || '').toLowerCase();
+                    const buyerLower = buyerLocation.toLowerCase();
+                    if (locLower.includes(buyerLower) || buyerLower.includes(locLower)) {
+                        exactMatch = true;
+                        distanceKm = 0;
+                    } else {
+                        const prodCoords = findCoordsForText(p.location);
+                        if (buyerCoords && prodCoords) {
+                            distanceKm = calcDistanceKm(buyerCoords, prodCoords);
+                        }
+                    }
+                }
+
+                return { ...p, distanceKm, exactMatch };
+            });
+
+            if (buyerLocation) {
+                approvedProducts.sort((a, b) => {
+                    if (a.exactMatch && !b.exactMatch) return -1;
+                    if (!a.exactMatch && b.exactMatch) return 1;
+                    if (a.distanceKm !== null && b.distanceKm !== null) return a.distanceKm - b.distanceKm;
+                    if (a.distanceKm !== null) return -1;
+                    if (b.distanceKm !== null) return 1;
+                    return 0;
+                });
+            }
 
             if (approvedProducts.length === 0) {
                 grid.innerHTML = `<div style="grid-column: 1/-1; text-align:center; padding: 40px; background:white; border-radius:10px;">
@@ -1312,6 +1893,15 @@
             }
 
             grid.innerHTML = approvedProducts.map(p => {
+                let proximityHtml = '';
+                if (buyerLocation) {
+                    if (p.exactMatch) {
+                        proximityHtml = `<span class="proximity-tag exact-match">📍 In Your Area (${buyerLocation})</span>`;
+                    } else if (p.distanceKm !== null) {
+                        proximityHtml = `<span class="proximity-tag">🚗 ~${p.distanceKm} km from ${buyerLocation}</span>`;
+                    }
+                }
+
                 const commentsHtml = (p.comments || []).map(c => `
                     <div class="comment-item">
                         <div class="comment-author">💬 ${c.buyerName}:</div>
@@ -1330,6 +1920,7 @@
                              alt="${p.title}" class="product-img"
                              onerror="this.src='https://images.unsplash.com/photo-1500937386664-56d1dfef3854?auto=format&fit=crop&w=800&q=80'">
                         <div class="product-body">
+                            ${proximityHtml}
                             <span class="badge ${p.category}">${p.category} • ${p.subCategory}</span>
                             <h3 class="product-title">${p.title}</h3>
                             <div class="product-meta">
@@ -1365,7 +1956,37 @@
         }
 
         // ==========================================
-        // 5. FARMER LISTING SUBMISSION (WITH FILE OR URL)
+        // 6. FARMING LEARNING HUB RENDERING
+        // ==========================================
+        function setLearnTopic(topic, btnElement) {
+            currentLearnTopic = topic;
+            document.querySelectorAll('#learnSection .tab').forEach(t => t.classList.remove('active'));
+            if (btnElement) btnElement.classList.add('active');
+            renderLearningHub();
+        }
+
+        function renderLearningHub() {
+            const grid = document.getElementById('learnGrid');
+            const filtered = FARMING_GUIDES.filter(g => currentLearnTopic === 'ALL' || g.topic === currentLearnTopic);
+
+            grid.innerHTML = filtered.map(guide => `
+                <div class="learn-card">
+                    <img src="${guide.thumbnail}" alt="${guide.title}" class="learn-thumb"
+                         onerror="this.src='https://images.unsplash.com/photo-1500937386664-56d1dfef3854?auto=format&fit=crop&w=800&q=80'">
+                    <div class="learn-body">
+                        <span class="learn-topic">${guide.badge}</span>
+                        <h3 class="learn-title">${guide.title}</h3>
+                        <p class="learn-desc">${guide.description}</p>
+                        <a href="${guide.youtubeUrl}" target="_blank" rel="noopener noreferrer" class="yt-link-btn">
+                            ▶ Watch on YouTube
+                        </a>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // ==========================================
+        // 7. FARMER LISTING SUBMISSION (WITH FILE OR URL)
         // ==========================================
         function submitProduct(event) {
             event.preventDefault();
@@ -1394,7 +2015,7 @@
                 saveProducts();
                 document.getElementById('farmerForm').reset();
                 closeModal('farmerModal');
-                alert('✅ Listing submitted! It will appear on the marketplace once Hentect Admin approves it.');
+                showTransparentBubble('what i have said');
             };
 
             if (fileInput.files && fileInput.files[0]) {
@@ -1409,7 +2030,7 @@
         }
 
         // ==========================================
-        // 6. ADMIN CONTROLS (APPROVE / REJECT / DELETE)
+        // 8. ADMIN CONTROLS (APPROVE / REJECT / DELETE)
         // ==========================================
         function renderAdminTable() {
             document.getElementById('statTotal').textContent = products.length;
@@ -1453,7 +2074,7 @@
         }
 
         // ==========================================
-        // 7. CART & DUAL CHECKOUT (M-PESA / WHATSAPP)
+        // 9. CART & DIRECT CALL / WHATSAPP FLOW
         // ==========================================
         function addToCart(productId) {
             const prod = products.find(p => p.id === productId);
@@ -1463,10 +2084,18 @@
             if (existing) {
                 existing.qty += 1;
             } else {
-                cart.push({ id: prod.id, title: prod.title, price: prod.price, unit: prod.unit, qty: 1 });
+                cart.push({
+                    id: prod.id,
+                    title: prod.title,
+                    price: prod.price,
+                    unit: prod.unit,
+                    qty: 1,
+                    farmerName: prod.farmerName,
+                    farmerPhone: prod.farmerPhone
+                });
             }
             saveCart();
-            alert(`🛒 Added "${prod.title}" to cart!`);
+            alert(`🛒 Added "${prod.title}" to cart! Open Cart to go to phone call and call ${prod.farmerName} (${prod.farmerPhone}) or chat them on WhatsApp.`);
         }
 
         function removeFromCart(productId) {
@@ -1489,17 +2118,23 @@
 
             let grandTotal = 0;
             container.innerHTML = cart.map(item => {
+                const prod = products.find(p => p.id === item.id) || {};
+                const farmerPhone = item.farmerPhone || prod.farmerPhone || '0700000000';
+                const farmerName = item.farmerName || prod.farmerName || 'Farmer';
                 const sub = item.price * item.qty;
                 grandTotal += sub;
                 return `
                     <div class="cart-item">
                         <div>
                             <strong>${item.title}</strong><br>
-                            <small>KES ${item.price.toLocaleString()} x ${item.qty} (${item.unit})</small>
+                            <small>KES ${item.price.toLocaleString()} x ${item.qty} (${item.unit})</small><br>
+                            <small style="color:var(--primary-dark); font-weight:600;">👨‍🌾 ${farmerName} • 📞 ${farmerPhone}</small>
                         </div>
-                        <div>
+                        <div class="cart-item-actions">
                             <strong>KES ${sub.toLocaleString()}</strong>
-                            <button type="button" onclick="removeFromCart(${item.id})" style="margin-left:8px; background:#fee2e2; color:#991b1b; border:none; padding:4px 8px; border-radius:4px; cursor:pointer;">✕</button>
+                            <a href="tel:${farmerPhone}" class="cart-call-link">📞 Call Farmer</a>
+                            <button type="button" class="cart-wa-btn" onclick="contactFarmerWhatsApp('${farmerPhone}', '${item.title.replace(/'/g, "\\'")}')">💬 WhatsApp</button>
+                            <button type="button" onclick="removeFromCart(${item.id})" style="background:#fee2e2; color:#991b1b; border:none; padding:4px 8px; border-radius:4px; cursor:pointer;">✕</button>
                         </div>
                     </div>
                 `;
@@ -1509,32 +2144,29 @@
         }
 
         function contactFarmerWhatsApp(phone, title) {
-            let cleanPhone = phone.replace(/\D/g, '');
+            let cleanPhone = (phone || '').replace(/\D/g, '');
             if (cleanPhone.startsWith('0')) cleanPhone = '254' + cleanPhone.slice(1);
+            if (!cleanPhone) cleanPhone = '254700000000';
             const msg = encodeURIComponent(`Hello! I saw your listing for "${title}" on Hentect Agro Market and I am interested.`);
             window.open(`https://wa.me/${cleanPhone}?text=${msg}`, '_blank');
         }
 
-        function checkoutMpesa() {
-            if (cart.length === 0) return alert('Your cart is empty!');
-            const phone = document.getElementById('buyerPhone').value.trim();
-            const name = document.getElementById('buyerName').value.trim();
-            if (!name || !phone) return alert('Please enter your Name and M-Pesa phone number.');
-            alert(`📲 M-Pesa Express STK Push sent to ${phone} for KES ${document.getElementById('cartTotal').textContent}. Enter your M-Pesa PIN on your phone to complete!`);
-        }
-
         function checkoutWhatsApp() {
-            if (cart.length === 0) return alert('Your cart is empty!');
-            const name = document.getElementById('buyerName').value.trim() || 'Buyer';
-            const loc = document.getElementById('deliveryLocation').value.trim() || 'Not specified';
+            if (cart.length === 0) return alert('Your cart is empty! Please go to phone call and call the farmer or add produce to your cart first.');
+            const firstItem = cart[0];
+            const prod = products.find(p => p.id === firstItem.id) || {};
+            let targetPhone = (firstItem.farmerPhone || prod.farmerPhone || '254700000000').replace(/\D/g, '');
+            if (targetPhone.startsWith('0')) targetPhone = '254' + targetPhone.slice(1);
             const itemsList = cart.map(i => `• ${i.title} (${i.qty} x KES ${i.price})`).join('\n');
             const total = document.getElementById('cartTotal').textContent;
-            const msg = encodeURIComponent(`*NEW HENTECT AGRO ORDER*\nBuyer: ${name}\nDelivery: ${loc}\n\n*Items:*\n${itemsList}\n\n*Total: KES ${total}*`);
-            window.open(`https://wa.me/254700000000?text=${msg}`, '_blank');
+            const msg = encodeURIComponent(`Hello! I would like to arrange this order from Hentect Agro Market:\n\n*Items:*\n${itemsList}\n\n*Estimated Total: KES ${total}*`);
+            window.open(`https://wa.me/${targetPhone}?text=${msg}`, '_blank');
         }
 
         // Initialize app on load
-        renderProducts();
+        runWelcomeAnimation();
+        applyBuyerLocation(buyerLocation);
+        renderLearningHub();
         updateCartUI();
     </script>
 </body>
